@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.img2,
                 R.drawable.img3,
                 R.drawable.img4,
-                R.drawable.img5
         };
         @Override
         public View getView(ViewGroup container, int position) {
