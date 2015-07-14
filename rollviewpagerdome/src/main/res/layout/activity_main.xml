@@ -10,6 +10,5 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:rollviewpager_hint_mode="point"
-        app:rollviewpager_play_delay="3000"
-        app:rollviewpager_hint_gravity="center"/>
+        app:rollviewpager_play_delay="3000"/>
 </RelativeLayout>
