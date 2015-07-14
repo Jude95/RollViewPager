@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="viewpager">
-        <attr name="hint_mode">
+    <declare-styleable name="RollViewPager">
+        <attr name="rollviewpager_hint_mode">
             <enum name="point" value="0" />
             <enum name="number" value="1" />
         </attr>
-        <attr name="hint_gravity">
+        <attr name="rollviewpager_hint_gravity">
             <enum name="left" value="0" />
             <enum name="center" value="1" />
             <enum name="right" value="2" />
         </attr>
-        <attr name="auto_play" format="integer" />
-        <attr name="hint_color" format="color" />
-        <attr name="hint_alpha" format="integer" />
+        <attr name="rollviewpager_play_delay" format="integer" />
+        <attr name="rollviewpager_hint_color" format="color" />
+        <attr name="rollviewpager_hint_alpha" format="integer" />
     </declare-styleable>
 </resources>

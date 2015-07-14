@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 
 /**
  * 静态存储的Adapter。概念参照{@link android.support.v4.app.FragmentStatePagerAdapter}
- * 每次都会创建新view，销毁旧View。节省内存消耗性能
- *
+ * view添加进去就不管了，View长在，内存不再。
  * <p>Subclasses only need to implement {@link #getView(ViewGroup,int)}
  * and {@link #getCount()} to have a working adapter.
  *
