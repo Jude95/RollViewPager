@@ -5,7 +5,7 @@
 看起来就像这样。指示器可以为点可以为数字还可以自定义，位置也可以变。  
 ![example](example.jpg)
 
-###依赖
+##依赖
 `compile 'com.jude:rollviewpager:1.0.1`
 
 ##xml属性
