@@ -5,6 +5,9 @@
 看起来就像这样。指示器可以为点可以为数字还可以自定义，位置也可以变。  
 ![example](example.jpg)
 
+###依赖
+`compile 'com.jude:rollviewpager:1.0.1`
+
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
 `app:rollviewpager_hint_mode="point"`  指示器展示模式,提供2种 `point`,`number`,默认不显示指示器  
