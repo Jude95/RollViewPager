@@ -13,7 +13,7 @@
 `app:rollviewpager_hint_mode="point"`  指示器展示模式,提供2种 `point`,`number`,默认不显示指示器  
 `app:rollviewpager_hint_gravity="center"`  指示器位置,提供`left`,`center`,`right`。默认`center`  
 `app:rollviewpager_hint_color="#7c7c7c"`  指示器背景颜色.默认黑色  
-`app:rollviewpager_hint_alpha`="80"  指示器背景透明度。0全透明，255不透明。默认0.  
+`app:rollviewpager_hint_alpha="80"`  指示器背景透明度。0全透明，255不透明。默认0.  
 一般指定一下间隔时间和指示器类型就好了。
 
 ##Adapter
