@@ -6,7 +6,7 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.0.1`
+`compile 'com.jude:rollviewpager:1.0.1'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
