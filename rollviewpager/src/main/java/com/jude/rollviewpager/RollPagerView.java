@@ -77,6 +77,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		color = type.getColor(R.styleable.RollViewPager_rollviewpager_hint_color, Color.BLACK);
 		alpha = type.getInt(R.styleable.RollViewPager_rollviewpager_hint_alpha, 0);
 		mViewPager = new ViewPager(getContext());
+		mViewPager.setId(R.id.viewpager_inner);
 		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addView(mViewPager);
 		type.recycle();
@@ -232,7 +233,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 * 取真正的Viewpager
 	 * @return
 	 */
-	public ViewPager getmViewPager() {
+	public ViewPager getViewPager() {
 		return mViewPager;
 	}
 
