@@ -6,7 +6,7 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.0.1'`
+`compile 'com.jude:rollviewpager:1.0.2'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
@@ -17,7 +17,7 @@
 一般指定一下间隔时间和指示器类型就好了。
 
 ##Adapter
-提供两种方便的PagerAdapter供使用。不仅用于本RollViewPager。任何viewpager都可以。
+提供两种方便的PagerAdapter供使用。不仅用于本RollViewPager。任何ViewPager都可以。本ViewPager也可以使用其他任意PagerAdapter
 
 ####StaticPagerAdapter
 存储页面的Adapter。view添加进去就存储不会再次`getView`，减少cpu消耗，消耗内存。  
