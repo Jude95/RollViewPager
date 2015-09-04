@@ -6,7 +6,7 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.0.2'`
+`compile 'com.jude:rollviewpager:1.0.3'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
@@ -20,9 +20,9 @@
 提供两种方便的PagerAdapter供使用。不仅用于本RollViewPager。任何ViewPager都可以。本ViewPager也可以使用其他任意PagerAdapter
 
 ####StaticPagerAdapter
-存储页面的Adapter。view添加进去就存储不会再次`getView`，减少cpu消耗，消耗内存。  
+存储页面的Adapter。view添加进去就存储不会再次`getView`，减少页面创建消耗，消耗内存。
 概念参照FragmentStatePagerAdapter
 
 ####DynamicPagerAdapter
-动态的Adapter。当创建3号view时会销毁1号view(递推)，会时常调用`getView`。增加cpu消耗，减小内存消耗。  
+动态的Adapter。当创建3号view时会销毁1号view(递推)，会时常调用`getView`。增加页面创建消耗，减小内存消耗。
 概念参照FragmentPagerAdapter
