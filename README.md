@@ -21,8 +21,8 @@
 
 ####StaticPagerAdapter
 存储页面的Adapter。view添加进去就存储不会再次`getView`，减少页面创建消耗，消耗内存。
-概念参照FragmentStatePagerAdapter
+概念参照FragmentPagerAdapter
 
 ####DynamicPagerAdapter
 动态的Adapter。当创建3号view时会销毁1号view(递推)，会时常调用`getView`。增加页面创建消耗，减小内存消耗。
-概念参照FragmentPagerAdapter
+概念参照FragmentStatePagerAdapter
