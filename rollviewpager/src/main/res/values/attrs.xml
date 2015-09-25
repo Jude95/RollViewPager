@@ -11,6 +11,11 @@
             <enum name="center" value="1" />
             <enum name="right" value="2" />
         </attr>
+        <attr name="rollviewpager_hint_paddingRight" format="dimension"/>
+        <attr name="rollviewpager_hint_paddingLeft" format="dimension"/>
+        <attr name="rollviewpager_hint_paddingTop" format="dimension"/>
+        <attr name="rollviewpager_hint_paddingBottom" format="dimension"/>
+
         <attr name="rollviewpager_play_delay" format="integer" />
         <attr name="rollviewpager_hint_color" format="color" />
         <attr name="rollviewpager_hint_alpha" format="integer" />

@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -40,8 +41,12 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	
 	//hint透明度
 	private int alpha;
-	
-	
+
+	private int paddingLeft;
+	private int paddingTop;
+	private int paddingRight;
+	private int paddingBottom;
+
 	private View mHintView;
 	private Timer timer;
 
@@ -76,6 +81,11 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		delay = type.getInt(R.styleable.RollViewPager_rollviewpager_play_delay, 0);
 		color = type.getColor(R.styleable.RollViewPager_rollviewpager_hint_color, Color.BLACK);
 		alpha = type.getInt(R.styleable.RollViewPager_rollviewpager_hint_alpha, 0);
+		paddingLeft = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingLeft, 0);
+		paddingRight = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingRight, 0);
+		paddingTop = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingTop, 0);
+		paddingBottom = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingBottom, 0);
+
 		mViewPager = new ViewPager(getContext());
 		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addView(mViewPager);
@@ -157,8 +167,8 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 */
 	private void loadHintView(){
 		addView(mHintView);
-
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, Util.dip2px(getContext(), 24));
+		mHintView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		((View) mHintView).setLayoutParams(lp);
 
