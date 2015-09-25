@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRollViewPager= (RollPagerView) findViewById(R.id.roll_view_pager);
+        mRollViewPager.setAnimationDurtion(1000);
         mRollViewPager.setAdapter(new TestAdapter());
     }
 

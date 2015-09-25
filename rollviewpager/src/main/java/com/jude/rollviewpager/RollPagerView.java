@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Interpolator;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -87,6 +88,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		paddingBottom = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingBottom, 0);
 
 		mViewPager = new ViewPager(getContext());
+		mViewPager.setId(R.id.viewpager_inner);
 		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addView(mViewPager);
 		type.recycle();
@@ -182,7 +184,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 
 	/**
-	 * 设置viewager滑动动画持续时间，貌似有效率问题
+	 * 设置viewager滑动动画持续时间
 	 * @param during
 	 */
 	public void setAnimationDurtion(final int during){
@@ -191,13 +193,25 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 			Field mField = ViewPager.class.getDeclaredField("mScroller");
 			mField.setAccessible(true);
 			Scroller mScroller = new Scroller(getContext(),
-					new AccelerateInterpolator()){
+					// 动画效果与ViewPager的一致
+                    new Interpolator() {
+                        public float getInterpolation(float t) {
+                            t -= 1.0f;
+                            return t * t * t * t * t + 1.0f;
+                        }
+                    }) {
 
-				@Override
-				public void startScroll(int startX, int startY, int dx,
-						int dy, int duration) {
-					super.startScroll(startX, startY, dx, dy, during);
-				}
+                @Override
+                public void startScroll(int startX, int startY, int dx,
+                                        int dy, int duration) {
+                    // 如果手工滚动,则加速滚动
+                    if (System.currentTimeMillis() - mRecentTouchTime > delay) {
+                        duration = during;
+                    } else {
+                        duration /= 2;
+                    }
+                    super.startScroll(startX, startY, dx, dy, duration);
+                }
 
 				@Override
 				public void startScroll(int startX, int startY, int dx,
@@ -242,7 +256,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 * 取真正的Viewpager
 	 * @return
 	 */
-	public ViewPager getmViewPager() {
+	public ViewPager getViewPager() {
 		return mViewPager;
 	}
 
