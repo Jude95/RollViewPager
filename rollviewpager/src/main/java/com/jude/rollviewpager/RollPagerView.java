@@ -13,9 +13,8 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Interpolator;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
@@ -248,6 +247,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		if (!(hintview instanceof View)){
 			throw new IllegalArgumentException("HintView should be a View");
 		}
+		removeView(mHintView);
 		this.mHintView = (View) hintview;
 		initHint(hintview);
 	}
