@@ -247,7 +247,9 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		if (!(hintview instanceof View)){
 			throw new IllegalArgumentException("HintView should be a View");
 		}
-		removeView(mHintView);
+		if (mHintView != null) {
+			removeView(mHintView);
+		}
 		this.mHintView = (View) hintview;
 		initHint(hintview);
 	}
