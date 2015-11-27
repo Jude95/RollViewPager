@@ -1,6 +1,9 @@
 # RollViewPager
 自动轮播的Viewpager
 
+[中文](https://github.com/Jude95/RollViewPager/blob/master/README.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README_en.md)
+
+
 触摸时会暂停播放，直到结束触摸一个延迟周期以后继续播放。
 看起来就像这样。指示器可以为点可以为数字还可以自定义，位置也可以变。  
 ![example](example.jpg)
