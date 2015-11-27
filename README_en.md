@@ -20,6 +20,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 `app:rollviewpager_hint_paddingRight`="16dp"  
 `app:rollviewpager_hint_paddingTop`="16dp"  
 `app:rollviewpager_hint_paddingBottom`="16dp"  
+
 Generally just need set the `play_delay` and `hint_mode`.  
 
 ##Adapter
