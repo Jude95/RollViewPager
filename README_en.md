@@ -12,11 +12,11 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.   
-`app:rollviewpager_hint_mode="point"`  type of indicator,`point` or `number`,default is null.  
+`app:rollviewpager_hint_mode="point"`  type of indicator,`point` or `number`,default is null.   
 `app:rollviewpager_hint_gravity="center"` gravity. `left`,`center`,`right`。default is `center`.  
 `app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.  
-`app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.
-`app:rollviewpager_hint_paddingLeft`="16dp"  padding for indicator's container
+`app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.  
+`app:rollviewpager_hint_paddingLeft`="16dp"  padding for indicator's container  
 `app:rollviewpager_hint_paddingRight`="16dp"  
 `app:rollviewpager_hint_paddingTop`="16dp"  
 `app:rollviewpager_hint_paddingBottom`="16dp"  
