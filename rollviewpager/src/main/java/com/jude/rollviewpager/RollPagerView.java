@@ -101,7 +101,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 * 仅当view正在显示 且 触摸等待时间过后 播放
 	 */
 	private void startPlay(){
-		if(delay<=0||mAdapter.getCount()<=1){
+		if(delay<=0||mAdapter==null||mAdapter.getCount()<=1){
 			return;
 		}
 		if (timer!=null){
@@ -178,7 +178,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		gd.setAlpha(alpha);
 		mHintView.setBackgroundDrawable(gd);
 
-		((HintView) mHintView).initView(mAdapter==null?0:mAdapter.getCount(), gravity);
+		((HintView) mHintView).initView(mAdapter == null ? 0 : mAdapter.getCount(), gravity);
 	}
 
 
@@ -226,6 +226,24 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
+	}
+
+    public void setPlayDelay(int delay){
+        this.delay = delay;
+        startPlay();
+    }
+
+
+	/**
+	 * 设置提示view的位置
+	 *
+	 */
+	public void setHintPadding(int left,int top,int right,int bottom){
+		paddingLeft = left;
+		paddingTop = top;
+		paddingRight = right;
+		paddingBottom = bottom;
+		mHintView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
 	}
 
 	/**
