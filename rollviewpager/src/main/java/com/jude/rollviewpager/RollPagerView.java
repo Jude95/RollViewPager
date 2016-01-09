@@ -50,6 +50,25 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	private View mHintView;
 	private Timer timer;
 
+	public interface HintViewDelegate{
+        void setCurrentPosition(int position,HintView hintView);
+        void initView(int length, int gravity,HintView hintView);
+    }
+
+    private HintViewDelegate mHintViewDelegate = new HintViewDelegate() {
+        @Override
+        public void setCurrentPosition(int position,HintView hintView) {
+            if(hintView!=null)
+                hintView.setCurrent(position);
+        }
+
+        @Override
+        public void initView(int length, int gravity,HintView hintView) {
+            if (hintView!=null)
+            hintView.initView(length,gravity);
+        }
+    };
+
 
 	public RollPagerView(Context context){
 		this(context,null);
@@ -123,8 +142,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 							cur=0;
 						}
 						mViewPager.setCurrentItem(cur);
-                        if(mHintView!=null)
-						((HintView)mHintView).setCurrent(cur);
+                        mHintViewDelegate.setCurrentPosition(cur, (HintView) mHintView);
 					}
 				});
 			}
@@ -132,6 +150,9 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	}
 
 
+    public void setHintViewDelegate(HintViewDelegate delegate){
+        this.mHintViewDelegate = delegate;
+    }
 
 	/**
 	 * 设置提示view
@@ -168,7 +189,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 */
 	private void loadHintView(){
 		addView(mHintView);
-		mHintView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
+		mHintView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		((View) mHintView).setLayoutParams(lp);
@@ -178,7 +199,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		gd.setAlpha(alpha);
 		mHintView.setBackgroundDrawable(gd);
 
-		((HintView) mHintView).initView(mAdapter == null ? 0 : mAdapter.getCount(), gravity);
+        mHintViewDelegate.initView(mAdapter == null ? 0 : mAdapter.getCount(), gravity, (HintView) mHintView);
 	}
 
 
@@ -311,7 +332,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	private void dataSetChanged(){
 		startPlay();
 		if(mHintView!=null)
-			((HintView) mHintView).initView(mAdapter.getCount(), gravity);
+			mHintViewDelegate.initView(mAdapter.getCount(), gravity, (HintView) mHintView);
 	}
 
 
@@ -340,7 +361,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 	@Override
 	public void onPageSelected(int arg0) {
-        if(mHintView!=null)((HintView) mHintView).setCurrent(arg0);
+        mHintViewDelegate.setCurrentPosition(arg0, (HintView) mHintView);
 	}
 
 }

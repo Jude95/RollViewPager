@@ -3,13 +3,13 @@
 
 [中文](https://github.com/Jude95/RollViewPager/blob/master/README.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README_en.md)
 
-
+支持无限循环。
 触摸时会暂停播放，直到结束触摸一个延迟周期以后继续播放。
 看起来就像这样。指示器可以为点可以为数字还可以自定义，位置也可以变。  
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.0.7'`
+`compile 'com.jude:rollviewpager:1.1.0'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
@@ -24,15 +24,76 @@
 一般指定一下间隔时间和指示器类型就好了。
 
 ##Adapter
-提供两种方便的PagerAdapter供使用。不仅用于本RollViewPager。任何ViewPager都可以。本ViewPager也可以使用其他任意PagerAdapter
+提供以下三种种方便的PagerAdapter供使用。  
+本ViewPager也可以使用其他任意PagerAdapter。  
 
 ####StaticPagerAdapter
-存储页面的Adapter。view添加进去就存储不会再次`getView`，减少页面创建消耗，消耗内存。
-概念参照FragmentPagerAdapter
+存储页面的Adapter。view添加进去就存储不会再次`getView`，减少页面创建消耗，消耗内存。一般自动播放的情况这种方案比较好。不然会大量构造View。
+概念参照FragmentPagerAdapter。可以用于其他ViewPager。
 
 ####DynamicPagerAdapter
 动态的Adapter。当创建3号view时会销毁1号view(递推)，会时常调用`getView`。增加页面创建消耗，减小内存消耗。
-概念参照FragmentStatePagerAdapter  
+概念参照FragmentStatePagerAdapter。可以用于其他ViewPager。  
+
+
+    //2种Adapter用法一样。
+    mRollViewPager.setAdapter(new TestNomalAdapter());
+    private class TestNomalAdapter extends StaticPagerAdapter{
+        private int[] imgs = {
+                R.drawable.img1,
+                R.drawable.img2,
+                R.drawable.img3,
+                R.drawable.img4,
+        };
+
+
+        @Override
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
+        }
+
+
+        @Override
+        public int getCount() {
+            return imgs.length;
+        }
+    }
+
+####LoopPagerAdapter
+无限循环的Adapter。无限循环上采用的是getCount返回int大数的方法(并没有什么缺点)。实测比N<->1的效果好。  
+数据采用StaticPagerAdapter的方案。节省创建View开销。
+本Adapter只能用于本RollViewPager;    
+无需其他设置，很简单。
+
+    mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
+    private class TestLoopAdapter extends LoopPagerAdapter{
+        private int[] imgs = {
+                R.drawable.img1,
+                R.drawable.img2,
+                R.drawable.img3,
+                R.drawable.img4,
+        };
+        public TestLoopAdapter(RollPagerView viewPager) {
+            super(viewPager);
+        }
+        @Override
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
+        }
+        @Override
+        public int getRealCount() {
+            return imgs.length;
+        }
+    }
+
 
 License
 -------
