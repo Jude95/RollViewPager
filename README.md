@@ -20,7 +20,7 @@
 `app:rollviewpager_hint_paddingRight`="16dp"  指示器右边距  
 `app:rollviewpager_hint_paddingTop`="16dp"  指示器上边距  
 `app:rollviewpager_hint_paddingBottom`="16dp"  指示器下边距  
-一般指定一下间隔时间和指示器类型就好了。
+一般指定一下间隔时间就好了。
 
 ##HintView
 提供了HintView是对指示器进行自定义。  
