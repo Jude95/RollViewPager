@@ -1,29 +1,34 @@
-package com.jude.rollviewpager;
+package com.jude.rollviewpager.hintview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class PointHintView extends LinearLayout implements HintView {
+import com.jude.rollviewpager.HintView;
+
+public abstract class ShapeHintView extends LinearLayout implements HintView {
 	private ImageView[] mDots;
 	private int length = 0;
 	private int lastPosition = 0;
 	
-	private GradientDrawable dot_normal;
-	private GradientDrawable dot_focus;
+	private Drawable dot_normal;
+	private Drawable dot_focus;
 	
-	public PointHintView(Context context){
+	public ShapeHintView(Context context){
 		super(context);
 	}
 	
-	public PointHintView(Context context, AttributeSet attrs) {
-		
+	public ShapeHintView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
+
+    public abstract Drawable makeFocusDrawable();
+
+    public abstract Drawable makeNormalDrawable();
 
 	@Override
 	public void initView(int length, int gravity) {
@@ -44,18 +49,8 @@ public class PointHintView extends LinearLayout implements HintView {
 		this.length = length;
 		mDots = new ImageView[length];
 		
-		dot_focus = new GradientDrawable();
-		dot_focus.setColor(Color.parseColor("#E3AC42"));
-		dot_focus.setCornerRadius(Util.dip2px(getContext(), 4));
-		dot_focus.setSize(Util.dip2px(getContext(), 8), Util.dip2px(getContext(), 8));
-		
-		dot_normal = new GradientDrawable();
-		dot_normal.setColor(Color.WHITE);
-		dot_normal.setAlpha(125);
-		dot_normal.setCornerRadius(Util.dip2px(getContext(), 4));
-		dot_normal.setSize(Util.dip2px(getContext(), 8), Util.dip2px(getContext(), 8));
-		
-		
+		dot_focus = makeFocusDrawable();
+		dot_normal = makeNormalDrawable();
 		
         for (int i = 0; i < length; i++) {  
         	mDots[i]=new ImageView(getContext());

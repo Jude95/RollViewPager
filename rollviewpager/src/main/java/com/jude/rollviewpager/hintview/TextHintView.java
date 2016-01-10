@@ -1,4 +1,4 @@
-package com.jude.rollviewpager;
+package com.jude.rollviewpager.hintview;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -6,7 +6,9 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.TextView;
 
-class TextHintView extends TextView implements HintView {
+import com.jude.rollviewpager.HintView;
+
+public class TextHintView extends TextView implements HintView {
 	private int length;
 	
 	public TextHintView(Context context){

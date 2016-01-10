@@ -8,11 +8,10 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.1.0'`
+`compile 'com.jude:rollviewpager:1.2.0'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.   
-`app:rollviewpager_hint_mode="point"`  type of indicator,`point` or `number`,default is null.   
 `app:rollviewpager_hint_gravity="center"` gravity. `left`,`center`,`right`。default is `center`.  
 `app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.  
 `app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.  
@@ -21,7 +20,22 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 `app:rollviewpager_hint_paddingTop`="16dp"  
 `app:rollviewpager_hint_paddingBottom`="16dp"  
 
-Generally just need set the `play_delay` and `hint_mode`.  
+Generally just need set the `play_delay`.  
+
+##HintView
+provide Hintview to DIY the indicator;
+`setHintView(HintView hintview)`   
+ 
++ HintView
+    + ShapeHintView 
+        + IconHintView  
+        + ColorPointHintView    
+    + TextHintView  
+such as:
+
+        mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
+        mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+        mRollViewPager.setHintView(new TextHintView(this));
 
 ##Adapter
 There offer two Adapter for use conveniently.the RollViewPager can also user other PagerAdapter.

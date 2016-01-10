@@ -9,11 +9,10 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.1.0'`
+`compile 'com.jude:rollviewpager:1.2.0'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
-`app:rollviewpager_hint_mode="point"`  指示器展示模式,提供2种 `point`,`number`,默认不显示指示器  
 `app:rollviewpager_hint_gravity="center"`  指示器位置,提供`left`,`center`,`right`。默认`center`  
 `app:rollviewpager_hint_color="#7c7c7c"`  指示器背景颜色.默认黑色  
 `app:rollviewpager_hint_alpha`="80"  指示器背景透明度。0全透明，255不透明。默认0.
@@ -22,6 +21,21 @@
 `app:rollviewpager_hint_paddingTop`="16dp"  指示器上边距
 `app:rollviewpager_hint_paddingBottom`="16dp"  指示器下边距 
 一般指定一下间隔时间和指示器类型就好了。
+
+##HintView
+提供了HintView是对指示器进行自定义。
+`setHintView(HintView hintview)`
+HintView
+
++ TextHintView  //文字指示器
++ ShapeHintView //图案指示器
+    + IconHintView  //资源图标作图案的图案指示器
+    + ColorPointHintView    //色点作图案的图案指示器
+
+
+        mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
+        mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+        mRollViewPager.setHintView(new TextHintView(this));
 
 ##Adapter
 提供以下三种种方便的PagerAdapter供使用。  

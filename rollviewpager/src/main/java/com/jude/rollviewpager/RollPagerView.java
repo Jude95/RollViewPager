@@ -18,6 +18,8 @@ import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
+import com.jude.rollviewpager.hintview.ColorPointHintView;
+
 import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -96,14 +98,13 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 		TypedArray type = getContext().obtainStyledAttributes(attrs, R.styleable.RollViewPager);
 		gravity = type.getInteger(R.styleable.RollViewPager_rollviewpager_hint_gravity, 1);
-		int mode = type.getInteger(R.styleable.RollViewPager_rollviewpager_hint_mode, -1);
 		delay = type.getInt(R.styleable.RollViewPager_rollviewpager_play_delay, 0);
 		color = type.getColor(R.styleable.RollViewPager_rollviewpager_hint_color, Color.BLACK);
 		alpha = type.getInt(R.styleable.RollViewPager_rollviewpager_hint_alpha, 0);
 		paddingLeft = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingLeft, 0);
 		paddingRight = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingRight, 0);
 		paddingTop = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingTop, 0);
-		paddingBottom = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingBottom, 0);
+		paddingBottom = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingBottom, Util.dip2px(getContext(),4));
 
 		mViewPager = new ViewPager(getContext());
 		mViewPager.setId(R.id.viewpager_inner);
@@ -111,7 +112,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		addView(mViewPager);
 		type.recycle();
 
-		initHint(mode);
+		initHint(new ColorPointHintView(getContext(),Color.parseColor("#E3AC42"),Color.parseColor("#88ffffff")));
 	}
 
 
@@ -154,22 +155,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         this.mHintViewDelegate = delegate;
     }
 
-	/**
-	 * 设置提示view
-	 * @param mode
-	 */
-	private void initHint(int mode){
-		switch(mode){
-		case 1:
-			initHint(new TextHintView(getContext()));
-			break;
-        case 0:
-			initHint(new PointHintView(getContext()));
-			break;
-        default:
-            break;
-		}
-	}
 
 	private void initHint(HintView hintview){
 		if(mHintView!=null){

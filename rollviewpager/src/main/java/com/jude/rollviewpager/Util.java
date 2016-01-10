@@ -2,7 +2,7 @@ package com.jude.rollviewpager;
 
 import android.content.Context;
 
-class Util {
+public class Util {
 	/** 
      * dpתpx
      * 

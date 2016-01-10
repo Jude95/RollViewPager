@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.IconHintView;
 
 public class MainActivity extends AppCompatActivity {
     private RollPagerView mRollViewPager;
@@ -21,8 +22,11 @@ public class MainActivity extends AppCompatActivity {
         mRollViewPager= (RollPagerView) findViewById(R.id.roll_view_pager);
         mRollViewPager.setPlayDelay(1000);
         mRollViewPager.setAnimationDurtion(500);
-        //mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
-        mRollViewPager.setAdapter(new TestNomalAdapter());
+        mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
+        //mRollViewPager.setAdapter(new TestNomalAdapter());
+        mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
+        //mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+        //mRollViewPager.setHintView(new TextHintView(this));
     }
 
     private class TestLoopAdapter extends LoopPagerAdapter{
