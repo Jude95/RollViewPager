@@ -24,13 +24,13 @@
 
 ##HintView
 提供了HintView是对指示器进行自定义。
-`setHintView(HintView hintview)`
-HintView
-
-+ TextHintView  //文字指示器
-+ ShapeHintView //图案指示器
-    + IconHintView  //资源图标作图案的图案指示器
-    + ColorPointHintView    //色点作图案的图案指示器
+`setHintView(HintView hintview)`   
+ 
++ HintView
+    + ShapeHintView 
+        + IconHintView  
+        + ColorPointHintView    
+    + TextHintView  
 
 
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));

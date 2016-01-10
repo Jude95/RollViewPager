@@ -31,7 +31,8 @@ provide Hintview to DIY the indicator;
         + IconHintView  
         + ColorPointHintView    
     + TextHintView  
-such as:
+    
+For example:
 
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
         mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
