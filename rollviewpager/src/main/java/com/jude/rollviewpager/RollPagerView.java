@@ -249,7 +249,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		paddingTop = top;
 		paddingRight = right;
 		paddingBottom = bottom;
-		mHintView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
+		mHintView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 	}
 
 	/**
@@ -268,14 +268,14 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 * @param hintview
 	 */
 	public void setHintView(HintView hintview){
-		if (!(hintview instanceof View)){
-			throw new IllegalArgumentException("HintView should be a View");
-		}
+
 		if (mHintView != null) {
 			removeView(mHintView);
 		}
 		this.mHintView = (View) hintview;
-		initHint(hintview);
+		if (hintview!=null&&hintview instanceof View){
+			initHint(hintview);
+		}
 	}
 
 	/**

@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
         mRollViewPager.setAnimationDurtion(500);
         mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
         //mRollViewPager.setAdapter(new TestNomalAdapter());
+
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
         //mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
         //mRollViewPager.setHintView(new TextHintView(this));
+        mRollViewPager.setHintView(null);
     }
 
     private class TestLoopAdapter extends LoopPagerAdapter{

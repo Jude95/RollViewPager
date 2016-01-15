@@ -8,7 +8,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.2.0'`
+`compile 'com.jude:rollviewpager:1.2.1'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.   
@@ -37,7 +37,7 @@ For example:
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
         mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
         mRollViewPager.setHintView(new TextHintView(this));
-
+        mRollViewPager.setHintView(null);//hide the indicator
 ##Adapter
 There offer two Adapter for use conveniently.the RollViewPager can also user other PagerAdapter.
 

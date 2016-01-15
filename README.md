@@ -9,7 +9,7 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.2.0'`
+`compile 'com.jude:rollviewpager:1.2.1'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
@@ -37,7 +37,8 @@
     mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
     mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
     mRollViewPager.setHintView(new TextHintView(this));
-
+    mRollViewPager.setHintView(null);//隐藏指示器
+    
 ##Adapter
 提供以下三种种方便的PagerAdapter供使用。  
 本ViewPager也可以使用其他任意PagerAdapter。  
