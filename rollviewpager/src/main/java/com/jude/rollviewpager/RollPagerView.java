@@ -6,7 +6,7 @@ import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,6 +20,7 @@ import android.widget.Scroller;
 
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -111,10 +112,48 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addView(mViewPager);
 		type.recycle();
-
 		initHint(new ColorPointHintView(getContext(),Color.parseColor("#E3AC42"),Color.parseColor("#88ffffff")));
 	}
 
+    private final static class TimeTaskHandler extends Handler{
+        private WeakReference<RollPagerView> mRollPagerViewWeakReference;
+
+        public TimeTaskHandler(RollPagerView rollPagerView) {
+            this.mRollPagerViewWeakReference = new WeakReference<>(rollPagerView);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            RollPagerView rollPagerView = mRollPagerViewWeakReference.get();
+            int cur = rollPagerView.getViewPager().getCurrentItem()+1;
+            if(cur>=rollPagerView.mAdapter.getCount()){
+                cur=0;
+            }
+            rollPagerView.getViewPager().setCurrentItem(cur);
+            rollPagerView.mHintViewDelegate.setCurrentPosition(cur, (HintView) rollPagerView.mHintView);
+        }
+    }
+    private TimeTaskHandler mHandler = new TimeTaskHandler(this);
+
+    private static class WeakTimerTask extends TimerTask{
+        private WeakReference<RollPagerView> mRollPagerViewWeakReference;
+
+        public WeakTimerTask(RollPagerView mRollPagerView) {
+            this.mRollPagerViewWeakReference = new WeakReference<>(mRollPagerView);
+        }
+
+        @Override
+        public void run() {
+            RollPagerView rollPagerView = mRollPagerViewWeakReference.get();
+            if (rollPagerView!=null){
+                if(rollPagerView.isShown() && System.currentTimeMillis()-rollPagerView.mRecentTouchTime>rollPagerView.delay){
+                    rollPagerView.mHandler.sendEmptyMessage(0);
+                }
+            }else{
+                cancel();
+            }
+        }
+    }
 
 	/**
 	 * 开始播放
@@ -129,25 +168,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		}
 		timer = new Timer();
 		//用一个timer定时设置当前项为下一项
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-                if (isShown() && System.currentTimeMillis()-mRecentTouchTime>delay)
-				new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-					@Override
-					public void run() {
-						int cur = mViewPager.getCurrentItem()+1;
-						if(cur>=mAdapter.getCount()){
-							cur=0;
-						}
-						mViewPager.setCurrentItem(cur);
-                        mHintViewDelegate.setCurrentPosition(cur, (HintView) mHintView);
-					}
-				});
-			}
-		}, delay, delay);
+		timer.schedule(new WeakTimerTask(this), delay, delay);
 	}
 
 
