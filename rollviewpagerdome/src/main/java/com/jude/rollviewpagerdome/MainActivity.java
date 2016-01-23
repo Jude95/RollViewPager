@@ -28,15 +28,12 @@ public class MainActivity extends AppCompatActivity {
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
         //mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
         //mRollViewPager.setHintView(new TextHintView(this));
-        mRollViewPager.setHintView(null);
+        //mRollViewPager.setHintView(null);
     }
 
     private class TestLoopAdapter extends LoopPagerAdapter{
         private int[] imgs = {
-                R.drawable.img1,
-                R.drawable.img2,
-                R.drawable.img3,
-                R.drawable.img4,
+                R.drawable.img1
         };
 
         public TestLoopAdapter(RollPagerView viewPager) {

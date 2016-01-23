@@ -8,7 +8,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.2.3'`
+`compile 'com.jude:rollviewpager:1.2.4'`
 
 ##xml属性
 `app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.   
