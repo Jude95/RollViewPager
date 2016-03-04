@@ -32,6 +32,12 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
                 hintView.initView(getRealCount(),gravity);
         }
     }
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        mViewList.clear();
+
+    }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
