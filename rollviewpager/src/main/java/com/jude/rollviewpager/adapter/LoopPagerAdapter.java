@@ -2,7 +2,6 @@ package com.jude.rollviewpager.adapter;
 
 import android.database.DataSetObserver;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,7 +41,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         super.registerDataSetObserver(observer);
-        mViewPager.getViewPager().setCurrentItem(getCount()/2,false);
+        mViewPager.getViewPager().setCurrentItem(getCount()/2+1,false);
     }
 
     public LoopPagerAdapter(RollPagerView viewPager){
@@ -85,7 +84,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
 
     @Deprecated
     @Override
-    public int getCount() {
+    public final int getCount() {
         return getRealCount()<=0?0:Integer.MAX_VALUE;
     }
 
