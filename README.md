@@ -80,7 +80,7 @@
     }
 
 ####LoopPagerAdapter
-无限循环的Adapter。无限循环上采用的是getCount返回int大数的方法(并没有什么缺点)。实测比N<->1的效果好。  
+无限循环的Adapter。无限循环上采用的是getCount返回int大数的方法(并没有什么缺点,另外估计1s的间隔时间你在有生之年看不到他播放到底)。实测比N<->1的效果好。  
 数据采用StaticPagerAdapter的方案。节省创建View开销。
 本Adapter只能用于本RollViewPager;    
 无需其他设置，很简单。
