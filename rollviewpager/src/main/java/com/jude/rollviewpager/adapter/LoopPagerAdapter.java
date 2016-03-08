@@ -41,7 +41,10 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         super.registerDataSetObserver(observer);
-        mViewPager.getViewPager().setCurrentItem(getCount()/2+1,false);
+        if (getCount() == 0)return;
+        int half = Integer.MAX_VALUE/2;
+        int start = half - half%getRealCount();
+        mViewPager.getViewPager().setCurrentItem(start,false);
     }
 
     public LoopPagerAdapter(RollPagerView viewPager){
