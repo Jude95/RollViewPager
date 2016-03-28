@@ -3,35 +3,35 @@ A Viewpager can auto-play.
 
 [中文](https://github.com/Jude95/RollViewPager/blob/master/README.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README_en.md)
 
-The touch will pause playback, continue to play until a delay period after the end of the touch.  
-looks like this,Indicator can be customized to point or number, the gravity can be changed also.   
+The touch will pause playback, continue to play until a delay period after the end of the touch.
+looks like this,Indicator can be customized to point or number, the gravity can be changed also.
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.2.7'`
+`compile 'com.jude:rollviewpager:1.2.8'`
 
 ##xml属性
-`app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.   
-`app:rollviewpager_hint_gravity="center"` gravity. `left`,`center`,`right`。default is `center`.  
-`app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.  
-`app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.  
-`app:rollviewpager_hint_paddingLeft`="16dp"  padding for indicator's container  
-`app:rollviewpager_hint_paddingRight`="16dp"  
-`app:rollviewpager_hint_paddingTop`="16dp"  
-`app:rollviewpager_hint_paddingBottom`="16dp"  
+`app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.
+`app:rollviewpager_hint_gravity="center"` graviengty. `left`,`center`,`right`。default is `center`.
+`app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.
+`app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.
+`app:rollviewpager_hint_paddingLeft`="16dp"  padding for indicator's container
+`app:rollviewpager_hint_paddingRight`="16dp"
+`app:rollviewpager_hint_paddingTop`="16dp"
+`app:rollviewpager_hint_paddingBottom`="16dp"
 
-Generally just need set the `play_delay`.  
+Generally just need set the `play_delay`.
 
 ##HintView
 provide Hintview to DIY the indicator;
-`setHintView(HintView hintview)`   
- 
+`setHintView(HintView hintview)`
+
 + HintView
-    + ShapeHintView 
-        + IconHintView  
-        + ColorPointHintView    
-    + TextHintView  
-    
+    + ShapeHintView
+        + IconHintView
+        + ColorPointHintView
+    + TextHintView
+
 For example:
 
         mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
@@ -43,11 +43,11 @@ There offer two Adapter for use conveniently.the RollViewPager can also user oth
 
 ####StaticPagerAdapter
 this Adapter will store the every page(View), Once create multiple use.may take up more memory.
-Like FragmentPagerAdapter.this can use for any ViewPager;  
+Like FragmentPagerAdapter.this can use for any ViewPager;
 
 ####DynamicPagerAdapter
-this Adapter will not store the View.it create new View every time.save the memory.    
-Like FragmentStatePagerAdapter.this can use for any ViewPager;  
+this Adapter will not store the View.it create new View every time.save the memory.
+Like FragmentStatePagerAdapter.this can use for any ViewPager;
 
     //the usage of the 2 adapter is same;
     mRollViewPager.setAdapter(new TestNomalAdapter());
@@ -79,7 +79,7 @@ Like FragmentStatePagerAdapter.this can use for any ViewPager;
 ####LoopPagerAdapter
 A loop adapter.realize by return MAX_INT in getCount().
 same as StaticPagerAdapter in page store.Once create multiple use.
-this adapter only for RollViewPager. 
+this adapter only for RollViewPager.
 the usage is very simple。
 
     mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
