@@ -171,6 +171,13 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		timer.schedule(new WeakTimerTask(this), delay, delay);
 	}
 
+    private void stopPlay(){
+        if (timer!=null){
+            timer.cancel();
+            timer = null;
+        }
+    }
+
 
     public void setHintViewDelegate(HintViewDelegate delegate){
         this.mHintViewDelegate = delegate;
@@ -260,6 +267,18 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         startPlay();
     }
 
+
+    public void pause(){
+        stopPlay();
+    }
+
+    public void resume(){
+        startPlay();
+    }
+
+    public boolean isPlaying(){
+        return timer!=null;
+    }
 
 	/**
 	 * 设置提示view的位置
