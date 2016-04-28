@@ -11,7 +11,15 @@
 ##依赖
 `compile 'com.jude:rollviewpager:1.2.9'`
 
-##xml属性
+## 使用
+
+    <com.jude.rollviewpager.RollPagerView
+        android:id="@+id/roll_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:rollviewpager_play_delay="3000"/>
+        
+        
 `app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
 `app:rollviewpager_hint_gravity="center"`  指示器位置,提供`left`,`center`,`right`。默认`center`  
 `app:rollviewpager_hint_color="#7c7c7c"`  指示器背景颜色.默认黑色  

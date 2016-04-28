@@ -7,10 +7,17 @@ The touch will pause playback, continue to play until a delay period after the e
 looks like this,Indicator can be customized to point or number, the gravity can be changed also.
 ![example](example.jpg)
 
-##依赖
+## Depandence
 `compile 'com.jude:rollviewpager:1.2.9'`
 
-##xml属性
+## Usage
+
+    <com.jude.rollviewpager.RollPagerView
+        android:id="@+id/roll_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:rollviewpager_play_delay="3000"/>
+        
 `app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.
 `app:rollviewpager_hint_gravity="center"` graviengty. `left`,`center`,`right`。default is `center`.
 `app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.
