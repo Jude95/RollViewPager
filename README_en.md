@@ -13,7 +13,6 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 ## Usage
 
     <com.jude.rollviewpager.RollPagerView
-        android:id="@+id/roll_view_pager"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:rollviewpager_play_delay="3000"/>
