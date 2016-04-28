@@ -3,8 +3,8 @@ A Viewpager can auto-play.
 
 [中文](https://github.com/Jude95/RollViewPager/blob/master/README.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README_en.md)
 
-The touch will pause playback, continue to play until a delay period after the end of the touch.
-looks like this,Indicator can be customized to point or number, the gravity can be changed also.
+The touch will pause playback, continue to play until a delay period after the end of the touch.  
+looks like this,Indicator can be customized to point or number, the gravity can be changed also.  
 ![example](example.jpg)
 
 ## Depandence
