@@ -14,7 +14,6 @@
 ## 使用
 
     <com.jude.rollviewpager.RollPagerView
-        android:id="@+id/roll_view_pager"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:rollviewpager_play_delay="3000"/>
