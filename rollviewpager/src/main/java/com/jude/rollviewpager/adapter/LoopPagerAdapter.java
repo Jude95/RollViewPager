@@ -1,7 +1,6 @@
 package com.jude.rollviewpager.adapter;
 
 import android.database.DataSetObserver;
-import android.os.Looper;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
