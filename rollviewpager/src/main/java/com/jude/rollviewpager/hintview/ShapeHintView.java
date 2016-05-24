@@ -33,6 +33,7 @@ public abstract class ShapeHintView extends LinearLayout implements HintView {
 	@Override
 	public void initView(int length, int gravity) {
         removeAllViews();
+		lastPosition = 0;
 		setOrientation(HORIZONTAL);
 		switch (gravity) {
 		case 0:

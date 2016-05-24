@@ -33,14 +33,15 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     }
     @Override
     public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
         mViewList.clear();
+        mViewPager.getViewPager().setAdapter(this);
+        super.notifyDataSetChanged();
     }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         super.registerDataSetObserver(observer);
-        if (getCount() == 0)return;
+        if (getCount() <= 1)return;
         int half = Integer.MAX_VALUE/2;
         int start = half - half%getRealCount();
         mViewPager.getViewPager().setCurrentItem(start,false);

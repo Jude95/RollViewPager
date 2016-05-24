@@ -9,7 +9,7 @@
 ![example](example.jpg)
 
 ##依赖
-`compile 'com.jude:rollviewpager:1.3.0'`
+`compile 'com.jude:rollviewpager:1.3.1'`
 
 ## 使用
 

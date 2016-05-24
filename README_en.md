@@ -8,7 +8,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 ![example](example.jpg)
 
 ## Depandence
-`compile 'com.jude:rollviewpager:1.3.0'`
+`compile 'com.jude:rollviewpager:1.3.1'`
 
 ## Usage
 

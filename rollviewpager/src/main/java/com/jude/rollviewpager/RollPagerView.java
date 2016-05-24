@@ -131,6 +131,8 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
             }
             rollPagerView.getViewPager().setCurrentItem(cur);
             rollPagerView.mHintViewDelegate.setCurrentPosition(cur, (HintView) rollPagerView.mHintView);
+			if (rollPagerView.mAdapter.getCount()<=1)rollPagerView.stopPlay();
+
         }
     }
     private TimeTaskHandler mHandler = new TimeTaskHandler(this);
@@ -355,10 +357,10 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	}
 
 	private void dataSetChanged(){
-		startPlay();
 		if(mHintView!=null)
 			mHintViewDelegate.initView(mAdapter.getCount(), gravity, (HintView) mHintView);
-	}
+        startPlay();
+    }
 
 
 	/**
