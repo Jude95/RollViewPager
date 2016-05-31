@@ -1,128 +1,130 @@
 # RollViewPager
-自动轮播的Viewpager
+A Viewpager can auto-play.
 
-[中文](https://github.com/Jude95/RollViewPager/blob/master/README.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README_en.md)
+[中文](https://github.com/Jude95/RollViewPager/blob/master/README_ch.md) | [English](https://github.com/Jude95/RollViewPager/blob/master/README.md)
 
-支持无限循环。
-触摸时会暂停播放，直到结束触摸一个延迟周期以后继续播放。
-看起来就像这样。指示器可以为点可以为数字还可以自定义，位置也可以变。  
+The touch will pause playback, continue to play until a delay period after the end of the touch.  
+looks like this,Indicator can be customized to point or number, the gravity can be changed also.  
 ![example](example.jpg)
 
-##依赖
-`compile 'com.jude:rollviewpager:1.3.1'`
+## Depandence
+```groovy
+compile 'com.jude:rollviewpager:1.3.1'
+```
 
-## 使用
+## Usage
+```xml
+<com.jude.rollviewpager.RollPagerView
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    app:rollviewpager_play_delay="3000"/>
+```
 
-    <com.jude.rollviewpager.RollPagerView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:rollviewpager_play_delay="3000"/>
-        
-        
-`app:rollviewpager_play_delay="3000"`  播放间隔时间，单位ms。填0则不播放。默认为0 
-`app:rollviewpager_hint_gravity="center"`  指示器位置,提供`left`,`center`,`right`。默认`center`  
-`app:rollviewpager_hint_color="#7c7c7c"`  指示器背景颜色.默认黑色  
-`app:rollviewpager_hint_alpha`="80"  指示器背景透明度。0全透明，255不透明。默认0.  
-`app:rollviewpager_hint_paddingLeft`="16dp"  指示器左边距  
-`app:rollviewpager_hint_paddingRight`="16dp"  指示器右边距  
-`app:rollviewpager_hint_paddingTop`="16dp"  指示器上边距  
-`app:rollviewpager_hint_paddingBottom`="16dp"  指示器下边距  
-一般指定一下间隔时间就好了。
+`app:rollviewpager_play_delay="3000"`  period，unit is ms。0 for no auto-play。**default is 0**.  
+`app:rollviewpager_hint_gravity="center"` graviengty. `left`,`center`,`right`。default is `center`.  
+`app:rollviewpager_hint_color="#7c7c7c"`  color for indicator's container.default is black.  
+`app:rollviewpager_hint_alpha`="80"  alpha for indicator's container。0 for complete transparent，255 for no transparent。default is 0.  
+`app:rollviewpager_hint_paddingLeft`="16dp"  padding for indicator's container  
+`app:rollviewpager_hint_paddingRight`="16dp"  
+`app:rollviewpager_hint_paddingTop`="16dp"  
+`app:rollviewpager_hint_paddingBottom`="16dp"  
+
+Generally just need set the `play_delay`.  
 
 ##HintView
-提供了HintView是对指示器进行自定义。  
-`setHintView(HintView hintview)`   
- 
-+ HintView  
-    + ShapeHintView  
-        + IconHintView  
-        + ColorPointHintView    
-    + TextHintView  
+provide Hintview to DIY the indicator;
+`setHintView(HintView hintview)`
 
-用法：
++ HintView
+    + ShapeHintView
+        + IconHintView
+        + ColorPointHintView
+    + TextHintView
 
-    mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
-    mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
-    mRollViewPager.setHintView(new TextHintView(this));
-    mRollViewPager.setHintView(null);//隐藏指示器
-    
+For example:
+```java
+mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
+mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+mRollViewPager.setHintView(new TextHintView(this));
+mRollViewPager.setHintView(null);//hide the indicator
+```
 ##Adapter
-提供以下三种种方便的PagerAdapter供使用。  
-本ViewPager也可以使用其他任意PagerAdapter。  
+There offer two Adapter for use conveniently.the RollViewPager can also user other PagerAdapter.
 
 ####StaticPagerAdapter
-存储页面的Adapter。view添加进去就存储不会再次`getView`，减少页面创建消耗，消耗内存。一般自动播放的情况这种方案比较好。不然会大量构造View。
-概念参照FragmentPagerAdapter。可以用于其他ViewPager。
+this Adapter will store the every page(View), Once create multiple use.may take up more memory.
+Like FragmentPagerAdapter.this can use for any ViewPager;
 
 ####DynamicPagerAdapter
-动态的Adapter。当创建3号view时会销毁1号view(递推)，会时常调用`getView`。增加页面创建消耗，减小内存消耗。
-概念参照FragmentStatePagerAdapter。可以用于其他ViewPager。  
+this Adapter will not store the View.it create new View every time.save the memory.
+Like FragmentStatePagerAdapter.this can use for any ViewPager;
+```java
+//the usage of the 2 adapter is same;
+mRollViewPager.setAdapter(new TestNomalAdapter());
+private class TestNomalAdapter extends StaticPagerAdapter{
+    private int[] imgs = {
+            R.drawable.img1,
+            R.drawable.img2,
+            R.drawable.img3,
+            R.drawable.img4,
+    };
 
-
-    //2种Adapter用法一样。
-    mRollViewPager.setAdapter(new TestNomalAdapter());
-    private class TestNomalAdapter extends StaticPagerAdapter{
-        private int[] imgs = {
-                R.drawable.img1,
-                R.drawable.img2,
-                R.drawable.img3,
-                R.drawable.img4,
-        };
-
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return view;
-        }
-
-
-        @Override
-        public int getCount() {
-            return imgs.length;
-        }
+    @Override
+    public View getView(ViewGroup container, int position) {
+        ImageView view = new ImageView(container.getContext());
+        view.setImageResource(imgs[position]);
+        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return view;
     }
+    
+    @Override
+    public int getCount() {
+        return imgs.length;
+    }
+}
+```
 
 ####LoopPagerAdapter
-无限循环的Adapter。无限循环上采用的是getCount返回int大数的方法(并没有什么缺点,另外估计1s的间隔时间你在有生之年看不到他播放到底)。实测比N<->1的效果好。  
-数据采用StaticPagerAdapter的方案。节省创建View开销。
-本Adapter只能用于本RollViewPager;    
-无需其他设置，很简单。
-
-    mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
-    private class TestLoopAdapter extends LoopPagerAdapter{
-        private int[] imgs = {
-                R.drawable.img1,
-                R.drawable.img2,
-                R.drawable.img3,
-                R.drawable.img4,
-        };
-        public TestLoopAdapter(RollPagerView viewPager) {
-            super(viewPager);
-        }
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return view;
-        }
-        @Override
-        public int getRealCount() {
-            return imgs.length;
-        }
+A loop adapter.realize by return MAX_INT in getCount().
+same as StaticPagerAdapter in page store.Once create multiple use.
+this adapter only for RollViewPager.
+the usage is very simple。
+```java
+mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
+private class TestLoopAdapter extends LoopPagerAdapter{
+    private int[] imgs = {
+            R.drawable.img1,
+            R.drawable.img2,
+            R.drawable.img3,
+            R.drawable.img4,
+    };
+    
+    public TestLoopAdapter(RollPagerView viewPager) {
+        super(viewPager);
     }
-
-#### 播放控制
-
-    rollViewPager.pause()//暂停
-    rollViewPager.resume()//恢复
-    rollViewPager.isPlaying()//是否正在播放
-
+    
+    @Override
+    public View getView(ViewGroup container, int position) {
+        ImageView view = new ImageView(container.getContext());
+        view.setImageResource(imgs[position]);
+        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return view;
+    }
+    
+    @Override
+    public int getRealCount() {
+        return imgs.length;
+    }
+}
+```
+#### Play Control
+```java
+rollViewPager.pause()
+rollViewPager.resume()
+rollViewPager.isPlaying()
+```
 License
 -------
 
