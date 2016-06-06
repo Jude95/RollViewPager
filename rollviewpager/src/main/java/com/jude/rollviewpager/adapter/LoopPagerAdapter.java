@@ -35,14 +35,20 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     public void notifyDataSetChanged() {
         mViewList.clear();
         mViewPager.getViewPager().setAdapter(this);
+        initPosition(true);
         super.notifyDataSetChanged();
     }
 
+    //一定要用这个回调,因为它只有第一次设置Adapter才会被回调。而除了这个时候去设置位置都是...ANR
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         super.registerDataSetObserver(observer);
+        initPosition(false);
+    }
+
+    private void initPosition(boolean isFast){
         if (getCount() <= 1)return;
-        int half = Integer.MAX_VALUE/2;
+        int half = isFast?getRealCount()*3:Integer.MAX_VALUE/2;
         int start = half - half%getRealCount();
         mViewPager.getViewPager().setCurrentItem(start,false);
     }

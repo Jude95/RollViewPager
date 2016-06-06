@@ -338,7 +338,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		mAdapter = adapter;
 		dataSetChanged();
 		adapter.registerDataSetObserver(new JPagerObserver());
-
 	}
 
 	/**
