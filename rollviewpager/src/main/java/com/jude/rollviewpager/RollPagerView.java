@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	private ViewPager mViewPager;
 	private PagerAdapter mAdapter;
 	private OnItemClickListener mOnItemClickListener;
+    private GestureDetector mGestureDetector;
+
 	private long mRecentTouchTime;
 	//播放延迟
 	private int delay;
@@ -114,6 +117,20 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		addView(mViewPager);
 		type.recycle();
 		initHint(new ColorPointHintView(getContext(),Color.parseColor("#E3AC42"),Color.parseColor("#88ffffff")));
+        //手势处理
+        mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                if (mOnItemClickListener!=null){
+                    if (mAdapter instanceof LoopPagerAdapter){//原谅我写了这么丑的代码
+                        mOnItemClickListener.onItemClick(mViewPager.getCurrentItem()%((LoopPagerAdapter) mAdapter).getRealCount());
+                    }else {
+                        mOnItemClickListener.onItemClick(mViewPager.getCurrentItem());
+                    }
+                }
+                return super.onSingleTapUp(e);
+            }
+        });
 	}
 
     private final static class TimeTaskHandler extends Handler{
@@ -285,9 +302,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 
     public void setOnItemClickListener(OnItemClickListener listener){
-        if (!isClickable()) {
-            setClickable(true);
-        }
         this.mOnItemClickListener = listener;
     }
 
@@ -342,12 +356,12 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	 * @param adapter
 	 */
 	public void setAdapter(PagerAdapter adapter){
-		mViewPager.setAdapter(adapter);
-		mViewPager.addOnPageChangeListener(this);
+        mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(this);
 		mAdapter = adapter;
 		dataSetChanged();
 		adapter.registerDataSetObserver(new JPagerObserver());
-	}
+    }
 
 	/**
 	 * 用来实现adapter的notifyDataSetChanged通知HintView变化
@@ -370,7 +384,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         startPlay();
     }
 
-
 	/**
 	 * 为了实现触摸时和过后一定时间内不滑动,这里拦截
 	 * @param ev
@@ -379,29 +392,8 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 		mRecentTouchTime = System.currentTimeMillis();
+        mGestureDetector.onTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
-    }
-
-    /**
-     * 如果设置了mOnItemClickListener就拦截掉事件.谁叫ViewPager会吞掉所有事件.
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return mOnItemClickListener!=null;
-    }
-
-    @Override
-    public boolean performClick() {
-        if (mOnItemClickListener!=null){
-            if (mAdapter instanceof LoopPagerAdapter){//原谅我写了这么丑的代码
-                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem()%((LoopPagerAdapter) mAdapter).getRealCount());
-            }else {
-                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem());
-            }
-        }
-        return super.performClick();
     }
 
     @Override
