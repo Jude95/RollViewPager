@@ -10,7 +10,7 @@
 
 ##依赖
 ```groovy
-compile 'com.jude:rollviewpager:1.3.2'
+compile 'com.jude:rollviewpager:1.3.3'
 ```
 
 ## 使用
@@ -50,7 +50,15 @@ mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE
 mRollViewPager.setHintView(new TextHintView(this));
 mRollViewPager.setHintView(null);//隐藏指示器
 ```
-    
+##ItemClickListener
+```java
+mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
+  @Override
+  public void onItemClick(int position) {
+      Toast.makeText(MainActivity.this,"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
+  }
+});
+```
 ##Adapter
 提供以下三种种方便的PagerAdapter供使用。  
 本ViewPager也可以使用其他任意PagerAdapter。  

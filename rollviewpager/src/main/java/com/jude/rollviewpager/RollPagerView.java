@@ -18,6 +18,7 @@ import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
+import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.lang.ref.WeakReference;
@@ -32,6 +33,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 	private ViewPager mViewPager;
 	private PagerAdapter mAdapter;
+	private OnItemClickListener mOnItemClickListener;
 	private long mRecentTouchTime;
 	//播放延迟
 	private int delay;
@@ -86,7 +88,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 		super(context, attrs, defStyle);
 		initView(attrs);
 	}
-
 
 	/**
 	 * 读取提示形式  和   提示位置   和    播放延迟
@@ -282,6 +283,14 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         return timer!=null;
     }
 
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        if (!isClickable()) {
+            setClickable(true);
+        }
+        this.mOnItemClickListener = listener;
+    }
+
 	/**
 	 * 设置提示view的位置
 	 *
@@ -363,7 +372,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 
 	/**
-	 * 为了实现触摸时和过后一定时间内不滑动
+	 * 为了实现触摸时和过后一定时间内不滑动,这里拦截
 	 * @param ev
 	 * @return
 	 */
@@ -371,6 +380,28 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     public boolean dispatchTouchEvent(MotionEvent ev) {
 		mRecentTouchTime = System.currentTimeMillis();
         return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 如果设置了mOnItemClickListener就拦截掉事件.谁叫ViewPager会吞掉所有事件.
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return mOnItemClickListener!=null;
+    }
+
+    @Override
+    public boolean performClick() {
+        if (mOnItemClickListener!=null){
+            if (mAdapter instanceof LoopPagerAdapter){//原谅我写了这么丑的代码
+                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem()%((LoopPagerAdapter) mAdapter).getRealCount());
+            }else {
+                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem());
+            }
+        }
+        return super.performClick();
     }
 
     @Override

@@ -97,5 +97,5 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
         return getRealCount()<=1?getRealCount():Integer.MAX_VALUE;
     }
 
-    protected abstract int getRealCount();
+    public abstract int getRealCount();
 }

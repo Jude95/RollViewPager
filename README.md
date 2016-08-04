@@ -9,7 +9,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 
 ## Depandence
 ```groovy
-compile 'com.jude:rollviewpager:1.3.2'
+compile 'com.jude:rollviewpager:1.3.3'
 ```
 
 ## Usage
@@ -47,6 +47,15 @@ mRollViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawab
 mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
 mRollViewPager.setHintView(new TextHintView(this));
 mRollViewPager.setHintView(null);//hide the indicator
+```
+##ItemClickListener
+```java
+mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
+  @Override
+  public void onItemClick(int position) {
+      Toast.makeText(MainActivity.this,"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
+  }
+});
 ```
 ##Adapter
 There offer two Adapter for use conveniently.the RollViewPager can also user other PagerAdapter.
