@@ -59,6 +59,7 @@ mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
   }
 });
 ```
+如果设置ItemClickListener,ViewPager内的View将不会再接收到触摸事件.
 ##Adapter
 提供以下三种种方便的PagerAdapter供使用。  
 本ViewPager也可以使用其他任意PagerAdapter。  

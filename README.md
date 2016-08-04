@@ -57,6 +57,7 @@ mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
   }
 });
 ```
+The View in ViewPager won't get the TouchEvent if you set the ItemClickListener.
 ##Adapter
 There offer two Adapter for use conveniently.the RollViewPager can also user other PagerAdapter.
 
