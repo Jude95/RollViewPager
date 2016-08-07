@@ -2,12 +2,14 @@ package com.jude.rollviewpager.adapter;
 
 import android.database.DataSetObserver;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jude.rollviewpager.HintView;
 import com.jude.rollviewpager.RollPagerView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -31,26 +33,33 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
                 hintView.initView(getRealCount(),gravity);
         }
     }
+
     @Override
     public void notifyDataSetChanged() {
-        mViewList.clear();
-        mViewPager.getViewPager().setAdapter(this);
-        initPosition(true);
         super.notifyDataSetChanged();
+        initPosition();
     }
 
     //一定要用这个回调,因为它只有第一次设置Adapter才会被回调。而除了这个时候去设置位置都是...ANR
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         super.registerDataSetObserver(observer);
-        initPosition(false);
+        initPosition();
     }
 
-    private void initPosition(boolean isFast){
+    private void initPosition(){
         if (getCount() <= 1)return;
-        int half = isFast?getRealCount()*3:Integer.MAX_VALUE/2;
+        int half = Integer.MAX_VALUE/2;
         int start = half - half%getRealCount();
-        mViewPager.getViewPager().setCurrentItem(start,false);
+        try {
+            Field field = ViewPager.class.getField("mCurItem");
+            field.setAccessible(true);
+            field.set(mViewPager,start);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public LoopPagerAdapter(RollPagerView viewPager){
