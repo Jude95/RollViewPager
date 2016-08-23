@@ -1,6 +1,7 @@
 package com.jude.rollviewpagerdome;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,33 +10,28 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.jude.utils.JUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private RollPagerView mLoopViewPager;
     private RollPagerView mNormalViewPager;
     private TestLoopAdapter mLoopAdapter;
     private TestNomalAdapter mNormalAdapter;
-
-    public static final String[] imgs = {
-            "http://pic.500px.me/picurl/vcg5da48ce9497b91f9c81c17958d4f882e?code=e165fb4d228d4402",
-            "http://pic.500px.me/picurl/49431365352e4e94936d4562a7fbc74a---jpg?code=647e8e97cd219143",
-            "http://pic.500px.me/picurl/vcgd5d3cfc7257da293f5d2686eec1068d1?code=2597028fc68bd766",
-            "http://pic.500px.me/picurl/vcg1aa807a1b8bd1369e4f983e555d5b23b?code=c0c4bb78458e5503",
-            "http://pic.500px.me/picurl/vcg9327737b7b040770e4f983e555d5b23b?code=7567a9d1acc29f24"
-    };
-
+    private Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        JUtils.initialize(getApplication());
         mLoopViewPager= (RollPagerView) findViewById(R.id.loop_view_pager);
         mLoopViewPager.setPlayDelay(1000);
         mLoopViewPager.setAdapter(mLoopAdapter = new TestLoopAdapter(mLoopViewPager));
@@ -61,43 +57,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        findViewById(R.id.minus).setOnClickListener(new View.OnClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                mLoopAdapter.minus();
-                mNormalAdapter.minus();
+            public void run() {
+                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1");
+                try {
+                    JSONObject jsonObject = new JSONObject(content);
+                    JSONArray strArr = jsonObject.getJSONArray("results");
+                    final String[] imgs  = new String[strArr.length()];
+                    for (int i = 0; i < strArr.length(); i++) {
+                        JSONObject obj = strArr.getJSONObject(i);
+                        imgs[i] = obj.getString("url");
+                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoopAdapter.setImgs(imgs);
+                            mNormalAdapter.setImgs(imgs);
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        });
-        findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoopAdapter.add();
-                mNormalAdapter.add();
-            }
-        });
-
-
+        }).start();
     }
 
 
     private class TestLoopAdapter extends LoopPagerAdapter{
+        String[] imgs = new String[0];
 
-        private int count = imgs.length;
-
-        public void add(){
-            Log.i("RollViewPager","Add");
-            count++;
-            if (count>imgs.length)count = imgs.length;
+        public void setImgs(String[] imgs){
+            this.imgs = imgs;
             notifyDataSetChanged();
         }
-        public void minus(){
-            Log.i("RollViewPager","Minus");
-            count--;
-            if (count<1)count=1;
-            notifyDataSetChanged();
-        }
+
 
         public TestLoopAdapter(RollPagerView viewPager) {
             super(viewPager);
@@ -105,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(ViewGroup container, int position) {
-            Log.i("RollViewPager","getView:"+imgs[position%count]);
+            Log.i("RollViewPager","getView:"+imgs[position]);
 
             ImageView view = new ImageView(container.getContext());
             view.setOnClickListener(new View.OnClickListener() {
@@ -116,32 +110,23 @@ public class MainActivity extends AppCompatActivity {
             });
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(MainActivity.this).load(imgs[position%count])
+            Glide.with(MainActivity.this).load(imgs[position])
                     .into(view);
             return view;
         }
 
         @Override
         public int getRealCount() {
-            return count;
+            return imgs.length;
         }
 
     }
 
     private class TestNomalAdapter extends StaticPagerAdapter{
+        String[] imgs = new String[0];
 
-        private int count = imgs.length;
-
-        public void add(){
-            Log.i("RollViewPager","Add");
-            count++;
-            if (count>imgs.length)count = imgs.length;
-            notifyDataSetChanged();
-        }
-        public void minus(){
-            Log.i("RollViewPager","Minus");
-            count--;
-            if (count<1)count=1;
+        public void setImgs(String[] imgs){
+            this.imgs = imgs;
             notifyDataSetChanged();
         }
 
@@ -150,14 +135,14 @@ public class MainActivity extends AppCompatActivity {
             ImageView view = new ImageView(container.getContext());
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(MainActivity.this).load(imgs[position%count]).into(view);
+            Glide.with(MainActivity.this).load(imgs[position]).into(view);
             return view;
         }
 
 
         @Override
         public int getCount() {
-            return count;
+            return imgs.length;
         }
     }
 }
