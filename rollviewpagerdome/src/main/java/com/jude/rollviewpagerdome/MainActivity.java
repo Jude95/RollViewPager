@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,9 +24,13 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     private RollPagerView mLoopViewPager;
     private RollPagerView mNormalViewPager;
+    private Button mBtnPre,mBtnAfter;
     private TestLoopAdapter mLoopAdapter;
     private TestNomalAdapter mNormalAdapter;
     private Handler handler = new Handler();
+
+    int mPage = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mBtnPre = (Button) findViewById(R.id.pre);
+        mBtnAfter = (Button) findViewById(R.id.after);
+
         mNormalViewPager= (RollPagerView) findViewById(R.id.normal_view_pager);
         mNormalViewPager.setPlayDelay(1000);
         mNormalViewPager.setAdapter(mNormalAdapter = new TestNomalAdapter());
@@ -55,10 +63,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mBtnPre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPage>0)
+                getData(mPage--);
+            }
+        });
+        mBtnAfter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData(mPage++);
+            }
+        });
+
+    }
+
+    public void getData(final int page){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1");
+                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/5/"+page);
                 try {
                     JSONObject jsonObject = new JSONObject(content);
                     JSONArray strArr = jsonObject.getJSONArray("results");
