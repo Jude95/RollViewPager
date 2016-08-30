@@ -3,7 +3,6 @@ package com.jude.rollviewpager.adapter;
 import android.database.DataSetObserver;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -86,7 +85,6 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
         int realPosition = position%getRealCount();
         View itemView = findViewByPosition(container,realPosition);
         container.addView(itemView);
-        Log.i("LoopAdapter","instantiateItem:"+position+"  view count:"+container.getChildCount());
         return itemView;
     }
 
