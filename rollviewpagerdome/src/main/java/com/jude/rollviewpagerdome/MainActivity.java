@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+(new Random().nextInt(3)+3)+"/"+page);
+                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+(new Random().nextInt(3)+1)+"/"+page);
                 if (TextUtils.isEmpty(content)){
                     handler.post(new Runnable() {
                         @Override
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
                         }
                     });
+                    return;
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(content);
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject obj = strArr.getJSONObject(i);
                         imgs[i] = obj.getString("url");
                     }
+                    Log.i("MainActivity","new data:"+imgs.length);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

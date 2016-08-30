@@ -10,7 +10,7 @@
 
 ##依赖
 ```groovy
-compile 'com.jude:rollviewpager:1.4.2'
+compile 'com.jude:rollviewpager:1.4.5'
 ```
 
 ## 使用

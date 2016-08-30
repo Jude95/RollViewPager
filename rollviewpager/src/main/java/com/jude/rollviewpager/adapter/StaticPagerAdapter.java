@@ -25,7 +25,8 @@ public abstract class StaticPagerAdapter extends PagerAdapter {
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-	}
+        container.removeView((View) object);
+    }
 
 	@Override
 	public void notifyDataSetChanged() {
@@ -35,7 +36,7 @@ public abstract class StaticPagerAdapter extends PagerAdapter {
 
 	@Override
 	public int getItemPosition(Object object) {
-		return super.getItemPosition(object);
+		return POSITION_NONE;
 	}
 
 	@Override

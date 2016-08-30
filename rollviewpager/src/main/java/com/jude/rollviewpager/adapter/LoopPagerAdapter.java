@@ -41,7 +41,10 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
         super.notifyDataSetChanged();
     }
 
-
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
@@ -50,14 +53,18 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     }
 
     private void initPosition(){
-        if (getCount() <= 1)return;
-        if (mViewPager.getViewPager().getCurrentItem()>100)return;//当位置已经设置好了就不管了.
-        int half = Integer.MAX_VALUE/2;
-        int start = half - half%getRealCount();
+        if (mViewPager.getViewPager().getCurrentItem() == 0&&getRealCount()>0){
+            int half = Integer.MAX_VALUE/2;
+            int start = half - half%getRealCount();
+            setCurrent(start);
+        }
+    }
+
+    private void setCurrent(int index){
         try {
             Field field = ViewPager.class.getDeclaredField("mCurItem");
             field.setAccessible(true);
-            field.set(mViewPager.getViewPager(),start);
+            field.set(mViewPager.getViewPager(),index);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -106,7 +113,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     @Deprecated
     @Override
     public final int getCount() {
-        return getRealCount()<=1?getRealCount():Integer.MAX_VALUE;
+        return getRealCount()<=0?getRealCount():Integer.MAX_VALUE;
     }
 
     public abstract int getRealCount();
