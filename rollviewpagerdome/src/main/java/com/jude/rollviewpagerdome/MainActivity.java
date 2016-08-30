@@ -1,8 +1,10 @@
 package com.jude.rollviewpagerdome;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,14 @@ import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.jude.rollviewpager.hintview.IconHintView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private RollPagerView mLoopViewPager;
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TestNomalAdapter mNormalAdapter;
     private Handler handler = new Handler();
 
-    int mPage = 0;
+    int mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         mLoopViewPager.setPlayDelay(1000);
         mLoopViewPager.setAdapter(mLoopAdapter = new TestLoopAdapter(mLoopViewPager));
         mLoopViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
-        //mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
         //mRollViewPager.setHintView(new TextHintView(this));
         //mRollViewPager.setHintView(null);
         mLoopViewPager.setOnItemClickListener(new OnItemClickListener() {
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mNormalViewPager= (RollPagerView) findViewById(R.id.normal_view_pager);
         mNormalViewPager.setPlayDelay(1000);
         mNormalViewPager.setAdapter(mNormalAdapter = new TestNomalAdapter());
-        mNormalViewPager.setHintView(new IconHintView(this,R.drawable.point_focus,R.drawable.point_normal));
+        mNormalViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW, Color.WHITE));
         mNormalViewPager.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPage>0)
+                if (mPage>1)
                 getData(mPage--);
             }
         });
@@ -76,14 +80,22 @@ public class MainActivity extends AppCompatActivity {
                 getData(mPage++);
             }
         });
-
+        getData(mPage);
     }
 
     public void getData(final int page){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/5/"+page);
+                String content = NetUtils.get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+(new Random().nextInt(3)+3)+"/"+page);
+                if (TextUtils.isEmpty(content)){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
                 try {
                     JSONObject jsonObject = new JSONObject(content);
                     JSONArray strArr = jsonObject.getJSONArray("results");
@@ -133,7 +145,10 @@ public class MainActivity extends AppCompatActivity {
             });
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(MainActivity.this).load(imgs[position])
+            Glide.with(MainActivity.this)
+                    .load(imgs[position])
+                    .placeholder(R.drawable.img4)
+                    .error(R.drawable.img1)
                     .into(view);
             return view;
         }
@@ -158,7 +173,11 @@ public class MainActivity extends AppCompatActivity {
             ImageView view = new ImageView(container.getContext());
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(MainActivity.this).load(imgs[position]).into(view);
+            Glide.with(MainActivity.this)
+                    .load(imgs[position])
+                    .placeholder(R.drawable.img4)
+                    .error(R.drawable.img1)
+                    .into(view);
             return view;
         }
 

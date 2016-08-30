@@ -3,6 +3,7 @@ package com.jude.rollviewpager.adapter;
 import android.database.DataSetObserver;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,7 +24,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     private class LoopHintViewDelegate implements RollPagerView.HintViewDelegate{
         @Override
         public void setCurrentPosition(int position, HintView hintView) {
-            if (hintView!=null)
+            if (hintView!=null&&getRealCount()>0)
                 hintView.setCurrent(position%getRealCount());
         }
 
@@ -36,9 +37,9 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
 
     @Override
     public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
         mViewList.clear();
         initPosition();
+        super.notifyDataSetChanged();
     }
 
 
@@ -51,12 +52,13 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
 
     private void initPosition(){
         if (getCount() <= 1)return;
+        if (mViewPager.getViewPager().getCurrentItem()>100)return;//当位置已经设置好了就不管了.
         int half = Integer.MAX_VALUE/2;
         int start = half - half%getRealCount();
         try {
             Field field = ViewPager.class.getDeclaredField("mCurItem");
             field.setAccessible(true);
-            field.set(mViewPager,start);
+            field.set(mViewPager.getViewPager(),start);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -84,6 +86,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
         int realPosition = position%getRealCount();
         View itemView = findViewByPosition(container,realPosition);
         container.addView(itemView);
+        Log.i("LoopAdapter","instantiateItem:"+position+"  view count:"+container.getChildCount());
         return itemView;
     }
 

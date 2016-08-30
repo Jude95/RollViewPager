@@ -379,8 +379,10 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 	}
 
 	private void dataSetChanged(){
-		if(mHintView!=null)
+		if(mHintView!=null) {
 			mHintViewDelegate.initView(mAdapter.getCount(), gravity, (HintView) mHintView);
+			mHintViewDelegate.setCurrentPosition(mViewPager.getCurrentItem(), (HintView) mHintView);
+		}
         startPlay();
     }
 
