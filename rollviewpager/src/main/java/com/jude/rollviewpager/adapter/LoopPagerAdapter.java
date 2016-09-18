@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public abstract class LoopPagerAdapter extends PagerAdapter{
     private RollPagerView mViewPager;
 
-    private ArrayList<View> mViewList = new ArrayList<>();
-
+    private SparseArray<View> mViews;
+    
     private class LoopHintViewDelegate implements RollPagerView.HintViewDelegate{
         @Override
         public void setCurrentPosition(int position, HintView hintView) {
@@ -36,7 +36,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
 
     @Override
     public void notifyDataSetChanged() {
-        mViewList.clear();
+        mViews.clear();
         initPosition();
         super.notifyDataSetChanged();
     }
@@ -75,6 +75,7 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
     public LoopPagerAdapter(RollPagerView viewPager){
         this.mViewPager = viewPager;
         viewPager.setHintViewDelegate(new LoopHintViewDelegate());
+        mViews = new SparseArray<>();
     }
 
     @Override
@@ -84,28 +85,17 @@ public abstract class LoopPagerAdapter extends PagerAdapter{
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+        int realPosition = position % getRealCount();
+        container.removeView(mViews.get(realPosition));
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int realPosition = position%getRealCount();
-        View itemView = findViewByPosition(container,realPosition);
-        container.addView(itemView);
+        int realPosition = position % getRealCount();
+        View itemView = mViews.get(realPosition) == null ?
+             getView(container, realPosition) : mViews.get(realPosition);
+        mViews.put(position, itemView);
         return itemView;
-    }
-
-
-    private View findViewByPosition(ViewGroup container,int position){
-        for (View view : mViewList) {
-            if (((int)view.getTag()) == position&&view.getParent()==null){
-                return view;
-            }
-        }
-        View view = getView(container,position);
-        view.setTag(position);
-        mViewList.add(view);
-        return view;
     }
 
     public abstract View getView(ViewGroup container, int position);
