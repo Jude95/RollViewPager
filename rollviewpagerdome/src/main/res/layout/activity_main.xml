@@ -1,41 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.jude.rollviewpager.RollPagerView
-        android:id="@+id/loop_view_pager"
+    <Button
+        android:id="@+id/simple"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:rollviewpager_play_delay="3000"/>
-    <com.jude.rollviewpager.RollPagerView
-        android:id="@+id/normal_view_pager"
+        android:layout_height="48dp"
+        android:text="Simple"
+        android:onClick="simple"/>
+    <Button
+        android:id="@+id/loop"
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_height="180dp"
-        app:rollviewpager_play_delay="3000"/>
-
-    <LinearLayout
+        android:layout_height="48dp"
+        android:text="Loop"
+        android:onClick="loop"/>
+    <Button
+        android:id="@+id/net"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/pre"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_margin="16dp"
-            android:text="上一页"/>
-        <Button
-            android:id="@+id/after"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_margin="16dp"
-            android:text="下一页"/>
-    </LinearLayout>
-
+        android:layout_height="48dp"
+        android:text="Net"
+        android:onClick="netImage"/>
 </LinearLayout>
