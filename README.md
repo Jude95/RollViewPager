@@ -9,7 +9,7 @@ looks like this,Indicator can be customized to point or number, the gravity can 
 
 ## Depandence
 ```groovy
-compile 'com.jude:rollviewpager:1.4.5'
+compile 'com.jude:rollviewpager:1.4.6'
 ```
 
 ## Usage

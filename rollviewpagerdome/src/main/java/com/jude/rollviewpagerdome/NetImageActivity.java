@@ -84,9 +84,14 @@ public class NetImageActivity extends AppCompatActivity {
         Call call =  client.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, final IOException e) {
                 Log.i("NetImageActivity","error:"+e.getMessage());
-                Toast.makeText(NetImageActivity.this,"网络请求失败，error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(NetImageActivity.this,"网络请求失败，error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
