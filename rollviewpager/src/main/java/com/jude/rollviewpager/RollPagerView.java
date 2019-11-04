@@ -143,6 +143,9 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         @Override
         public void handleMessage(Message msg) {
             RollPagerView rollPagerView = mRollPagerViewWeakReference.get();
+			if (rollPagerView == null) {
+				return;
+			}
             int cur = rollPagerView.getViewPager().getCurrentItem()+1;
             if(cur>=rollPagerView.mAdapter.getCount()){
                 cur=0;
