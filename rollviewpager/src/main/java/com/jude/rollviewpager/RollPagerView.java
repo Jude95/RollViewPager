@@ -113,7 +113,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
 		mViewPager = new ViewPager(getContext());
 		mViewPager.setId(R.id.viewpager_inner);
-		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		addView(mViewPager);
 		type.recycle();
 		initHint(new ColorPointHintView(getContext(),Color.parseColor("#E3AC42"),Color.parseColor("#88ffffff")));
